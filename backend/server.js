@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-// Connect to MongoDB
+
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error(' MongoDB connection error:', err));
@@ -18,15 +18,13 @@ mongoose.connect(process.env.MONGO_URI)
 // Initial scrape
 scrapeAndSave();
 
-// Run scrape every hour
+//  every hour
 cron.schedule('0 * * * *', () => {
   console.log('⏳ Scheduled scrape running...');
   scrapeAndSave();
 });
 
-// CRUD API
-
-// Get all products (with optional filtering and sorting)
+// CRUD operation
 app.get('/products', async (req, res) => {
   try {
     const filters = {};
@@ -45,7 +43,7 @@ app.get('/products', async (req, res) => {
   }
 });
 
-// Create a new product
+
 app.post('/products', async (req, res) => {
   try {
     const newProduct = new Product(req.body);
@@ -56,7 +54,7 @@ app.post('/products', async (req, res) => {
   }
 });
 
-// Update a product
+
 app.put('/products/:id', async (req, res) => {
   try {
     const updated = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -66,7 +64,6 @@ app.put('/products/:id', async (req, res) => {
   }
 });
 
-// Delete a product
 app.delete('/products/:id', async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
@@ -76,7 +73,7 @@ app.delete('/products/:id', async (req, res) => {
   }
 });
 
-// Start server
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server is running on http://localhost:${PORT}`);

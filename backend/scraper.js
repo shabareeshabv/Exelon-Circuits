@@ -12,13 +12,13 @@ async function scrapeAndSave() {
       name: product.querySelector('h3 a').title,
       price: product.querySelector('.price_color').innerText,
       description: 'No description available',
-      rating: product.querySelector('.star-rating').classList[1], // e.g., 'Three'
+      rating: product.querySelector('.star-rating').classList[1], 
     }));
   });
 
-  await Product.deleteMany(); // Clear old data
-  await Product.insertMany(products); // Save new data
-  console.log('✅ Products scraped and saved to MongoDB');
+  await Product.deleteMany();
+  await Product.insertMany(products); 
+  console.log('Products scraped and saved to MongoDB');
 
   await browser.close();
 }
