@@ -17,10 +17,10 @@ mongoose.connect(process.env.MONGO_URI)
 
 // Initial scrape
 scrapeAndSave();
-
-//  every hour
+ 
+//  every  1 hour update  
 cron.schedule('0 * * * *', () => {
-  console.log('⏳ Scheduled scrape running...');
+  console.log(' Scheduled scrape running...');
   scrapeAndSave();
 });
 
@@ -76,5 +76,5 @@ app.delete('/products/:id', async (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
